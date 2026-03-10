@@ -21,13 +21,22 @@
         </form>
         <?php
         if (isset($_POST['submit'])) {
+            session_start();
             include 'db.php';
 
             $user = $_POST['user'];
             $pass = $_POST['pass'];
 
             $cek = mysqli_query($conn, "SELECT * FROM tb_admin WHERE username = '" . $user . "' AND password = '" . MD5($pass) . "'");
-            echo mysqli_num_rows($cek);
+            if (mysqli_num_rows($cek) > 0) {
+                $d = mysqli_fetch_object($cek);
+                $_SESSION['status_login'] = true;
+                $_SESSION['a_global'] = $d;
+                $_SESSION['id'] = $d->admin_id;
+                echo '<script>window.location="dashboard.php"</script>';
+            } else {
+                echo '<script>alert("user atau pass salah")</>';
+            }
         }
         ?>
     </div>
