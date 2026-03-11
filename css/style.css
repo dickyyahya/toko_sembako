@@ -56,7 +56,7 @@ header{
 
 header h1{
     float: left;
-    padding: 10px;
+    padding: 10px 0;
 }
 header ul{
     float: right;
@@ -64,6 +64,10 @@ header ul{
 
 header ul li{
     display: inline-block;
+}
+
+footer{
+    padding: 25px 0;
 }
 
 header ul li a {
@@ -91,7 +95,7 @@ display: inline-block;
     border: 1px solid#ccc;
     padding: 15px;
     box-sizing: border-box;
-    margin: 10px 0;
+    margin: 10px 0 25px 0;
 }
 
 
