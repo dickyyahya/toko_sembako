@@ -1,3 +1,10 @@
+<?php
+session_start();
+if ($_SESSION['status_login'] != true) {
+    echo '<script>window.location="login.php"</script>';
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -13,14 +20,33 @@
 
 <body>
     <header>
-        <h1><a href="dashboard.php">Warung Savon</a></h1>
-        <ul>
-            <li><a href="dashboard.php">Dashboard</a></li>
-            <li><a href="profil.php">Profil</a></li>
-            <li><a href="data-kategori.php">Data Kategori</a></li>
-            <li><a href="data-produk.php">Data Produk</a></li>
-        </ul>
+        <div class="container">
+            <h1><a href="dashboard.php">Warung Savon</a></h1>
+            <ul>
+                <li><a href="dashboard.php">Dashboard</a></li>
+                <li><a href="profil.php">Profil</a></li>
+                <li><a href="data-kategori.php">Data Kategori</a></li>
+                <li><a href="data-produk.php">Data Produk</a></li>
+                <li><a href="keluar.php">Keluar</a></li>
+            </ul>
+        </div>
     </header>
+
+    <!-- content -->
+    <div class="section">
+        <div class="container">
+            <h3>Dashboard</h3>
+            <div class="box">
+                <h4>Selamat Datang <?php echo $_SESSION['a_global']->admin_name ?>Di Warung</h4>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <small>Copyright &copy; 2026 - Warung Savon</small>
+        </div>
+    </footer>
 </body>
 
 </html>
