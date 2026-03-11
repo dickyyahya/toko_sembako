@@ -37,7 +37,7 @@ if ($_SESSION['status_login'] != true) {
         <div class="container">
             <h3>Dashboard</h3>
             <div class="box">
-                <h4>Selamat Datang <?php echo $_SESSION['a_global']->admin_name ?>Di Warung</h4>
+                <h4>Selamat Datang <?php echo $_SESSION['a_global']->admin_name ?> Di Warung</h4>
             </div>
         </div>
     </div>
