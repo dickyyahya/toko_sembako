@@ -60,7 +60,7 @@ if ($_SESSION['status_login'] != true) {
                                 <tr>
                                     <td><?php echo $no++ ?></td>
                                     <td><?php echo $row['category_name'] ?></td>
-                                    <td><a href="edit-kategori.php?id=<?php echo $row['category_id'] ?>">edit</a> || <a href="proses-hapus.php?idk=<?php echo $row['category_id'] ?>">hapus</a></td>
+                                    <td><a href="edit-kategori.php?id=<?php echo $row['category_id'] ?>">edit</a> || <a href="proses-hapus.php?idk=<?php echo $row['category_id'] ?>" onclick="return confirm('yakin ingin hapus?')">hapus</a></td>
                                 </tr>
                             <?php } ?>
                         </tbody>
