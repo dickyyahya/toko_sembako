@@ -57,7 +57,7 @@ if ($_SESSION['status_login'] != true) {
                         <tbody>
                             <?php
                             $no = 1;
-                            $produk = mysqli_query($conn, "SELECT * FROM tb_product ORDER BY product_id DESC");
+                            $produk = mysqli_query($conn, "SELECT * FROM tb_product LEFT JOIN tb_category USING (category_id) ORDER BY product_id DESC");
                             if (mysqli_num_rows($produk) > 0) {
                                 while ($row = mysqli_fetch_array($produk)) {
 
@@ -67,10 +67,10 @@ if ($_SESSION['status_login'] != true) {
                                         <td><?php echo $no++ ?></td>
                                         <td><?php echo $row['category_name'] ?></td>
                                         <td><?php echo $row['product_name'] ?></td>
-                                        <td><?php echo $row['product_price'] ?></td>
+                                        <td>Rp. <?php echo number_format($row['product_price'])  ?></td>
                                         <td><?php echo $row['product_description'] ?></td>
-                                        <td><img src="produk/<?php echo $row['product_image'] ?>" alt=""></td>
-                                        <td><?php echo $row['product_status'] ?></td>
+                                        <td><img src="produk/<?php echo $row['product_image'] ?>" width="50px" alt=""></td>
+                                        <td><?php echo ($row['product_status'] == 0) ? 'Tidak Aktif' : 'aktif'  ?></td>
                                         <td><a href="edit-produk.php?id=<?php echo $row['product_id'] ?>">edit</a> || <a href="proses-hapus.php?idp=<?php echo $row['product_id'] ?>" onclick="return confirm('yakin ingin hapus?')">hapus</a></td>
                                     </tr>
                                 <?php }
