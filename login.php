@@ -24,8 +24,8 @@
             session_start();
             include 'db.php';
 
-            $user = $_POST['user'];
-            $pass = $_POST['pass'];
+            $user = mysqli_real_escape_string($conn, $_POST['user']);
+            $pass = mysqli_real_escape_string($conn, $_POST['pass']);
 
             $cek = mysqli_query($conn, "SELECT * FROM tb_admin WHERE username = '" . $user . "' AND password = '" . MD5($pass) . "'");
             if (mysqli_num_rows($cek) > 0) {
@@ -35,7 +35,7 @@
                 $_SESSION['id'] = $d->admin_id;
                 echo '<script>window.location="dashboard.php"</script>';
             } else {
-                echo '<script>alert("user atau pass salah")</>';
+                echo '<script>alert("user atau pass salah")</script>';
             }
         }
         ?>
