@@ -4,6 +4,12 @@ include 'db.php';
 if ($_SESSION['status_login'] != true) {
     echo '<script>window.location="login.php"</script>';
 }
+
+$kategori = mysqli_query($conn, "SELECT * FROM tb_category WHERE category_id = '" . $_GET['id'] . "'");
+if (mysqli_num_rows($kategori) == 0) {
+    echo '<script>window.location="data-kategori.php"</script>';
+}
+$k = mysqli_fetch_object($kategori);
 ?>
 
 <!DOCTYPE html>
@@ -36,36 +42,28 @@ if ($_SESSION['status_login'] != true) {
     <!-- content -->
     <div class="section">
         <div class="container">
-            <h3>Kategori</h3>
+            <h3>Edit Data Kategori</h3>
             <div class="box">
-                <h4>Data Kategori</h4>
-                <p><a href="tambah-kategori.php">Tambah Data</a></p>
-                <div class="box">
-                    <table border="1" cellspacing="0" class="table">
-                        <thead>
-                            <tr>
-                                <th width="60px">No</th>
-                                <th>Kategori</th>
-                                <th width="150px">Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php
-                            $no = 1;
-                            $kategori = mysqli_query($conn, "SELECT * FROM tb_category ORDER BY category_id DESC");
-                            while ($row = mysqli_fetch_array($kategori)) {
+                <form action="" method="POST">
+                    <input type="text" name="nama" placeholder="Nama Kategori" class="input-control" value="<?php echo $k->category_name ?>" required>
+                    <input type="submit" name="submit" value="Edit Data" class="btn">
+                </form>
+
+                <?php
+                if (isset($_POST['submit'])) {
+                    $nama = ucwords($_POST['nama']);
+                    $update = mysqli_query($conn, "UPDATE tb_category SET category_name = '" . $nama . "' WHERE category_id = '" . $k->category_id . "'");
 
 
-                            ?>
-                                <tr>
-                                    <td><?php echo $no++ ?></td>
-                                    <td><?php echo $row['category_name'] ?></td>
-                                    <td><a href="edit-kategori.php?id=<?php echo $row['category_id'] ?>">edit</a> || <a href="proses-hapus.php?idk=<?php echo $row['category_id'] ?>">hapus</a></td>
-                                </tr>
-                            <?php } ?>
-                        </tbody>
-                    </table>
-                </div>
+
+                    if ($update) {
+                        echo '<script>alert("Edit data berhasil")</>';
+                        echo '<script>window.location="data-kategori.php"</script>';
+                    } else {
+                        echo 'gagal' . mysqli_error($conn);
+                    }
+                }
+                ?>
             </div>
         </div>
     </div>
