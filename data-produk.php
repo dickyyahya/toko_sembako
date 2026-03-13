@@ -69,7 +69,7 @@ if ($_SESSION['status_login'] != true) {
                                         <td><?php echo $row['product_name'] ?></td>
                                         <td>Rp. <?php echo number_format($row['product_price'])  ?></td>
                                         <td><?php echo $row['product_description'] ?></td>
-                                        <td><img src="produk/<?php echo $row['product_image'] ?>" width="50px" alt=""></td>
+                                        <td><a href="produk/<?php echo $row['product_image'] ?>" target="_blank"><img src="produk/<?php echo $row['product_image'] ?>" width="50px" alt=""></a></td>
                                         <td><?php echo ($row['product_status'] == 0) ? 'Tidak Aktif' : 'aktif'  ?></td>
                                         <td><a href="edit-produk.php?id=<?php echo $row['product_id'] ?>">edit</a> || <a href="proses-hapus.php?idp=<?php echo $row['product_id'] ?>" onclick="return confirm('yakin ingin hapus?')">hapus</a></td>
                                     </tr>
