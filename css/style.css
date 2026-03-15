@@ -190,3 +190,51 @@ box-shadow: 0 0 3px #999 ;
     margin-top: 25px;
     display: inline-block;
 }
+
+.col-2{
+    width: 50%;
+    min-height: 200px;
+    border: 1px solid;
+    padding: 10px;
+    box-sizing: border-box;
+    float: left;
+}
+.col-2 img{
+    border: 1px solid #999;
+    padding: 5px;
+    box-sizing: border-box;
+}
+.col-2 h3{
+    margin-bottom: 10px;
+}
+
+.col-2 h4{
+    color: aqua;
+}
+.col-2 p{
+    margin: 15px 0;
+    text-align: justify;
+    line-height: 25px;
+    font-size: 14px;
+}
+
+
+@media screen and (max-width:768px){
+    .container{
+        width: 90%;
+    }
+
+    .col-5{
+        width: 50%;
+        margin-bottom: 10px;
+    }
+
+    .col-4{
+        width: 50%;
+        height: 300px;
+    }
+
+    .col-2{
+        width: 100%;
+    }
+}

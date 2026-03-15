@@ -4,7 +4,8 @@ include 'db.php';
 $kontak = mysqli_query($conn, "SELECT admin_telp, admin_email, admin_address FROM tb_admin WHERE admin_id =1");
 $a = mysqli_fetch_object($kontak);
 
-
+$produk = mysqli_query($conn, "SELECT * FROM tb_product WHERE product_id ='" . $_GET['id'] . "'");
+$p = mysqli_fetch_object($produk);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -39,36 +40,27 @@ $a = mysqli_fetch_object($kontak);
         </div>
     </div>
 
-
-
-    <!-- new produk -->
+    <!-- produk detail -->
     <div class="section">
         <div class="container">
-            <h3>Produk</h3>
+            <h3>Detail Produk</h3>
             <div class="box">
-                <?php
-                if ($_GET['search'] != '' || $_GET['kat'] != '') {
-                    $where = "AND product_name LIKE '%" . $_GET['search'] . "%'AND category_id LIKE '%" . $_GET['kat'] . "%'";
-                }
-                $produk = mysqli_query($conn, "SELECT * FROM tb_product WHERE product_status = 1 $where ORDER BY product_id DESC");
-                if (mysqli_num_rows($produk) > 0) {
-                    while ($p = mysqli_fetch_array($produk)) {
-
-                ?>
-                        <a href="detail-produk.php?id=<?php echo $p['product_id'] ?>">
-                            <div class="col-4">
-                                <img src="produk/<?php echo $p['product_image'] ?>" alt="">
-                                <p class="nama"><?php echo substr($p['product_name'], 0, 30)  ?></p>
-                                <p class="harga"><?php echo $p['product_price'] ?></p>
-                            </div>
-                        </a>
-                    <?php }
-                } else { ?>
-                    <p>Tidak ada produk</p>
-                <?php } ?>
+                <div class="col-2">
+                    <img src="produk/<?php echo $p->product_image ?>" alt="" width="100%">
+                </div>
+                <div class="col-2">
+                    <h3><?php echo $p->product_name ?></h3>
+                    <h4>Rp. <?php echo number_format($p->product_price) ?></h4>
+                    <p>Deskripsi : <br>
+                        <?php echo $p->product_description ?></p>
+                    <p><a href="https://api.whatsapp.com/send?phone=<?php echo $a->admin_telp ?>&text=Hai, saya tertarik dengan produk anda." target="_blank">Hubungi via WA <img src="img/wa.jpg" width="50px" alt=""></a></p>
+                </div>
             </div>
         </div>
     </div>
+
+
+
     <div class="footer">
         <div class="container">
             <h4>Alamat</h4>
