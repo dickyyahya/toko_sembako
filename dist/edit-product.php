@@ -1,10 +1,16 @@
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 session_start();
 include '../db.php';
 if ($_SESSION['status_login'] != true) {
   echo '<script>window.location="login.php"</script>';
 }
-
+$produk = mysqli_query($conn, "SELECT * FROM tb_product WHERE product_id ='" . $_GET['id'] . "'");
+if (mysqli_num_rows($produk) == 0) {
+  echo ' <script>window.location="data-produk.php"</script> ';
+}
+$p = mysqli_fetch_object($produk);
 
 ?>
 
@@ -192,18 +198,22 @@ if ($_SESSION['status_login'] != true) {
                 <div class="row">
                   <div class="col-md-6 mb-3">
                     <label for="productName" class="form-label">Nama Produk</label>
-                    <input type="text" name="nama" class="form-control" id="productName" placeholder="Enter product name" required>
+                    <input type="text" name="nama" class="form-control" id="productName" value=" <?php echo $p->product_name ?> " required>
                   </div>
 
                 </div>
                 <div class="row">
                   <div class="col-md-6 mb-3">
-                    <label for="productPrice" class="form-label">Harga</label>
-                    <input type="number" name="harga" class="form-control" id="productPrice" placeholder="0.00" step="0.01" required>
+                    <label for="prostock" class="form-label">Harga</label>
+                    <input type="number" name="harga" class="form-control" id="productPrice" value="<?php echo $p->product_price ?>" step="0.01" required>
                   </div>
-
                 </div>
-
+                <div class="row">
+                  <div class="col-md-6 mb-3">
+                    <label for="productStock" class="form-label">Stok</label>
+                    <input type="number" name="stok" class="form-control" id="productStock" value="<?php echo $p->product_stock ?>" required>
+                  </div>
+                </div>
                 <div class="mb-3">
                   <label for="productCategory" class="form-label">Kategori</label>
                   <select name="kategori" class="form-select" id="productCategory" required>
@@ -214,25 +224,29 @@ if ($_SESSION['status_login'] != true) {
                     ?>
                       <option value="<?php
                                       echo $r['category_id']
-                                      ?>"><?php echo $r['category_name'] ?></option>
-                    <?php } ?>
+                                      ?>" <?php
+                                          echo ($r['category_id'] == $p->category_id) ? 'selected' : '';
+                                          ?>><?php echo $r['category_name'] ?></option><?php } ?>
                   </select>
                 </div>
                 <div class="mb-3">
                   <label for="productImage" class="form-label">Gambar Produk</label>
-                  <input type="file" name="gambar" class="form-control" id="productImage" required>
+                  <br>
+                  <img src="../produk/<?php echo $p->product_image ?>" width="100px" alt="">
+                  <br><br>
+                  <input type="hidden" name="foto" value="<?php echo $p->product_image ?>">
+                  <input type="file" name="gambar" class="input-control">
                 </div>
                 <div class="mb-3">
                   <label for="productDescription" class="form-label">Deskripsi</label>
-                  <textarea class="form-control" name="deskripsi" id="productDescription" rows="4"
-                    placeholder="Enter product description"></textarea>
+                  <textarea class="form-control" name="deskripsi" id="productDescription" rows="4"><?php echo $p->product_description ?></textarea>
                 </div>
                 <div class="mb-3">
                   <label for="productCategory" class="form-label">Status</label>
                   <select class="form-select" name="status" id="productCategory" required>
                     <option value="">Pilih</option>
-                    <option value="1">Aktif</option>
-                    <option value="0">Nonaktif</option>
+                    <option value="1" <?php echo ($p->product_status == 1) ? 'selected' : '' ?>>Aktif</option>
+                    <option value="0" <?php echo ($p->product_status == 0) ? 'selected' : '' ?>>Nonaktif</option>
                   </select>
                 </div>
                 <div class="d-flex gap-2">
@@ -243,39 +257,58 @@ if ($_SESSION['status_login'] != true) {
               </form>
               <?php
               if (isset($_POST['submit'])) {
-
-                // print_r($_FILES['gambar']);
-                // tampung inputan form
+                // data inputan for form
                 $kategori = $_POST['kategori'];
                 $nama = $_POST['nama'];
                 $harga = $_POST['harga'];
-                $deskripsi = $_POST['deskripsi'];
+                $deskripsi = mysqli_real_escape_string($conn, $_POST['deskripsi']);
+                $stok = $_POST['stok'];
                 $status = $_POST['status'];
+                $foto = $_POST['foto'];
+
+                // tampung data gambar
                 // tampung data file
                 $filename = $_FILES['gambar']['name'];
                 $tmp_name = $_FILES['gambar']['tmp_name'];
-                $type1 = explode('.', $filename);
-                $type2 = $type1[1];
 
-                $newname = 'produk' . time() . '.' . $type2;
 
-                // tampung data format file allowed
+                // jika ganti gambar
+                if ($filename != '') {
+                  $type1 = explode('.', $filename);
+                  $type2 = $type1[1];
 
-                $tipe_diizinkan = array('jpg', 'jpeg', 'png', 'gif');
-                // validasi format file
+                  $newname = '../produk' . time() . '.' . $type2;
 
-                if (!in_array($type2, $tipe_diizinkan)) {
-                  echo '<script>alert("Format tidak diizinkan")</script>';
-                  // proses upload file + insert to db
-                } else {
-                  move_uploaded_file($tmp_name, '../produk/' . $newname);
-                  $insert = mysqli_query($conn, "INSERT INTO tb_product VALUES(null, '" . $kategori . "','" . $nama . "','" . $harga . "','" . $deskripsi . "','" . $newname . "','" . $status . "',null)");
-                  if ($insert) {
-                    echo '<script>alert("Berhasil tambah")</script>';
-                    echo '<script>window.location="inventory.php"</script>';
+                  $tipe_diizinkan = array('jpg', 'jpeg', 'png', 'gif');
+
+                  if (!in_array($type2, $tipe_diizinkan)) {
+                    echo '<script> alert("Format file tidak diizinkan")</script> ';
+                    exit;
                   } else {
-                    echo 'gagal' . mysqli_error($conn);
+                    unlink('../produk/' . $foto);
+
+                    move_uploaded_file($tmp_name, '../produk/' . $newname);
+                    $namagambar = $newname;
                   }
+                } else {
+                  // jika tidak ganti gambar
+                  $namagambar = $foto;
+                }
+                // queri update data produk
+                $update = mysqli_query($conn, "UPDATE tb_product SET
+                    category_id='" . $kategori . "',
+                    product_name = '" . $nama . "',
+                    product_price = '" . $harga . "',
+                    product_description='" . $deskripsi . "',
+                    product_stock = '" . $stok . "',
+                    product_image='" . $namagambar . "',
+                    product_status='" . $status . "' WHERE product_id = '" . $p->product_id . "'");
+
+                if ($update) {
+                  echo '<script>alert("ubah data berhasil")</script>';
+                  echo '<script>window.location="inventory.php"</script>';
+                } else {
+                  echo 'gagal' . mysqli_error($conn);
                 }
               }
               ?>
