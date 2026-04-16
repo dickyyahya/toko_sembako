@@ -201,9 +201,13 @@ if ($_SESSION['status_login'] != true) {
                     <label for="productPrice" class="form-label">Harga</label>
                     <input type="number" name="harga" class="form-control" id="productPrice" placeholder="0.00" step="0.01" required>
                   </div>
-
                 </div>
-
+                <div class="row">
+                  <div class="col-md-6 mb-3">
+                    <label for="productStock" class="form-label">Stok</label>
+                    <input type="number" name="stok" class="form-control" id="productStock" placeholder="0" required>
+                  </div>
+                </div>
                 <div class="mb-3">
                   <label for="productCategory" class="form-label">Kategori</label>
                   <select name="kategori" class="form-select" id="productCategory" required>
@@ -250,6 +254,7 @@ if ($_SESSION['status_login'] != true) {
                 $nama = $_POST['nama'];
                 $harga = $_POST['harga'];
                 $deskripsi = $_POST['deskripsi'];
+                $stok = $_POST['stok'];
                 $status = $_POST['status'];
                 // tampung data file
                 $filename = $_FILES['gambar']['name'];
@@ -269,7 +274,7 @@ if ($_SESSION['status_login'] != true) {
                   // proses upload file + insert to db
                 } else {
                   move_uploaded_file($tmp_name, '../produk/' . $newname);
-                  $insert = mysqli_query($conn, "INSERT INTO tb_product VALUES(null, '" . $kategori . "','" . $nama . "','" . $harga . "','" . $deskripsi . "','" . $newname . "','" . $status . "',null)");
+                  $insert = mysqli_query($conn, "INSERT INTO tb_product VALUES(null, '" . $kategori . "','" . $nama . "','" . $harga . "','" . $deskripsi . "','" . $stok . "','" . $newname . "','" . $status . "',null)");
                   if ($insert) {
                     echo '<script>alert("Berhasil tambah")</script>';
                     echo '<script>window.location="inventory.php"</script>';

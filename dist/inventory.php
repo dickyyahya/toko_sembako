@@ -210,6 +210,7 @@ if ($_SESSION['status_login'] != true) {
                   <th>Gambar</th>
                   <th>Kategori</th>
                   <th>Harga</th>
+                  <th>Stok</th>
                   <th>Action</th>
                 </tr>
               </thead>
@@ -226,7 +227,7 @@ if ($_SESSION['status_login'] != true) {
                       </td>
                       <td><?php echo $row['category_name'] ?></td>
                       <td>Rp. <?php echo number_format($row['product_price'])  ?></td>
-
+                      <td><?php echo $row['product_stock'] ?></td>
                       <td class="">
                         <a href="edit-product.php?id=<?php echo $row['product_id'] ?>" class=""><i class="ti ti-edit "></i></a>
                         <a href="../proses-hapus.php?idp=<?php echo $row['product_id'] ?>" onclick="return confirm('yakin ingin hapus?')" class="link-danger"><i class="ti ti-trash ms-2"></i></a>

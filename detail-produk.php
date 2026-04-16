@@ -53,6 +53,8 @@ $p = mysqli_fetch_object($produk);
                     <h4>Rp. <?php echo number_format($p->product_price) ?></h4>
                     <p>Deskripsi : <br>
                         <?php echo $p->product_description ?></p>
+                    <p>Stok : <br>
+                        <?php echo $p->product_stock ?></p>
                     <p><a href="https://api.whatsapp.com/send?phone=<?php echo $a->admin_telp ?>&text=Hai, saya tertarik dengan produk anda." target="_blank">Hubungi via WA <img src="img/wa.jpg" width="50px" alt=""></a></p>
                 </div>
             </div>
