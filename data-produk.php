@@ -60,8 +60,6 @@ if ($_SESSION['status_login'] != true) {
                             $produk = mysqli_query($conn, "SELECT * FROM tb_product LEFT JOIN tb_category USING (category_id) ORDER BY product_id DESC");
                             if (mysqli_num_rows($produk) > 0) {
                                 while ($row = mysqli_fetch_array($produk)) {
-
-
                             ?>
                                     <tr>
                                         <td><?php echo $no++ ?></td>
