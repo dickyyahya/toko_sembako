@@ -43,7 +43,7 @@
                                     <td><?php echo $row['category_name'] ?></td>
                                     <td class="">
                                         <a href="edit-category.php?id=<?php echo $row['category_id'] ?>" class=""><i class="ti ti-edit "></i></a>
-                                        <a href="../proses-hapus.php?idp=<?php echo $row['category_id'] ?>" onclick="return confirm('yakin ingin hapus?')" class="link-danger"><i class="ti ti-trash ms-2"></i></a>
+                                        <a href="../proses-hapus.php?idk=<?php echo $row['category_id'] ?>" onclick="return confirm('yakin ingin hapus?')" class="link-danger"><i class="ti ti-trash ms-2"></i></a>
                                     </td>
                                 </tr>
                             <?php }
