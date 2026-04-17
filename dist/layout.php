@@ -142,6 +142,8 @@
             <li class="px-4 py-2"><small class="nav-text">Main</small></li>
             <li><a class="nav-link active" href="index.php"><i class="ti ti-home"></i><span
                         class="nav-text">Dashboard</span></a></li>
+            <li><a class="nav-link" href="category.php"><i class="ti ti-category"></i><span
+                        class="nav-text">Kategori</span></a></li>
             <li><a class="nav-link" href="inventory.php"><i class="ti ti-box-seam"></i><span
                         class="nav-text">Inventory</span></a></li>
             <li><a class="nav-link" href="create-product.php"><i class="ti ti-plus"></i><span class="nav-text">Add
