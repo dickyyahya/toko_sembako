@@ -146,6 +146,8 @@
                         class="nav-text">Inventory</span></a></li>
             <li><a class="nav-link" href="create-product.php"><i class="ti ti-plus"></i><span class="nav-text">Add
                         Product</span></a></li>
+            <li><a class="nav-link" href="create-category.php"><i class="ti ti-plus"></i><span class="nav-text">Add
+                        Category</span></a></li>
             <!-- <li><a class="nav-link" href="reports.php"><i class="ti ti-receipt"></i><span class="nav-text">Reports</span></a>
       </li> -->
             <!-- <li><a class="nav-link" href="404-error.php"><i class="ti ti-alert-circle"></i><span class="nav-text">404 Error</span></a>
@@ -154,10 +156,11 @@
 
 
             <li class="px-4 pt-4 pb-2"><small class="nav-text">Account</small></li>
-            <li><a class="nav-link" href="signin.php"><i class="ti ti-logout"></i><span class="nav-text">Log in</span></a>
+            <li><a class="nav-link" href="signin.php"><i class="ti ti-login"></i><span class="nav-text">Log in</span></a>
             </li>
             <li><a class="nav-link" href="signup.php"><i class="ti ti-user-plus"></i><span class="nav-text">Sign
                         up</span></a></li>
+            <li><a class="nav-link" href="logout.php"><i class="ti ti-logout"></i><span class="nav-text">Logout</span></a></li>
         </ul>
 
     </aside>

@@ -30,10 +30,10 @@
 
         </div>
 
-        <form class="needs-validation mt-3" novalidate>
+        <form method="POST" class="needs-validation mt-3" novalidate>
           <div class="mb-3">
-            <label for="email" class="form-label">Email address</label>
-            <input id="email" type="email" class="form-control" placeholder="name@example.com" required autofocus>
+            <label for="user" class="form-label">Username</label>
+            <input id="text" name="user" type="text" class="form-control" placeholder="budi" required autofocus>
             <div class="invalid-feedback">Please enter a valid email.</div>
           </div>
 
@@ -42,7 +42,7 @@
               <span>Password</span>
               <a href="#" class="small link-primary">Forgot Password?</a>
             </label>
-            <input id="password" type="password" class="form-control" placeholder="Password" required minlength="6">
+            <input id="password" name="pass" type="password" class="form-control" placeholder="Password" required minlength="6">
             <div class="invalid-feedback">Please provide a password (min 6 characters).</div>
           </div>
 
@@ -53,8 +53,28 @@
             </div>
           </div>
 
-          <button class="btn btn-primary w-100" type="submit">Sign in</button>
+          <button class="btn btn-primary w-100" name="submit" type="submit">Sign in</button>
         </form>
+        <?php
+        if (isset($_POST['submit'])) {
+          session_start();
+          include '../db.php';
+
+          $user = mysqli_real_escape_string($conn, $_POST['user']);
+          $pass = mysqli_real_escape_string($conn, $_POST['pass']);
+
+          $cek = mysqli_query($conn, "SELECT * FROM tb_admin WHERE username = '" . $user . "' AND password = '" . MD5($pass) . "'");
+          if (mysqli_num_rows($cek) > 0) {
+            $d = mysqli_fetch_object($cek);
+            $_SESSION['status_login'] = true;
+            $_SESSION['a_global'] = $d;
+            $_SESSION['id'] = $d->admin_id;
+            echo '<script>window.location="index.php"</script>';
+          } else {
+            echo '<script>alert("user atau pass salah")</script>';
+          }
+        }
+        ?>
 
         <div class="text-center mt-3 small text-muted">
           Don't have an account? <a href="signup.php" class="link-primary">Sign up</a>
