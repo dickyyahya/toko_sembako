@@ -6,5 +6,5 @@ if ($_SESSION['status_login'] != true) {
   echo '<script>window.location="signin.php"</script>';
 }
 
-$page = 'index-content.php';
+$page = 'page-user/index-content.php';
 include 'layout.php';
