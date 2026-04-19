@@ -2,7 +2,7 @@
 include 'db.php';
 if (isset($_GET['idk'])) {
     $delete = mysqli_query($conn, "DELETE FROM tb_category WHERE category_id='" . $_GET['idk'] . "'");
-    echo '<script>window.location="dist/category.php"</script>';
+    echo '<script>window.location="admin/category.php"</script>';
 }
 
 if (isset($_GET['idp'])) {
@@ -10,5 +10,5 @@ if (isset($_GET['idp'])) {
     $p = mysqli_fetch_object($produk);
     unlink('./produk/' . $p->product_image);
     $delete =  mysqli_query($conn, "DELETE FROM tb_product WHERE product_id='" . $_GET['idp'] . "'");
-    echo '<script>window.location="dist/inventory.php"</script>';
+    echo '<script>window.location="admin/inventory.php"</script>';
 }
