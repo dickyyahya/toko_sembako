@@ -340,21 +340,30 @@ $a = mysqli_fetch_object($kontak);
 
           <ul class="portfolio-filters isotope-filters" data-aos="fade-up" data-aos-delay="100">
             <li data-filter="*" class="filter-active">All</li>
-            <li data-filter=".filter-app">App</li>
-            <li data-filter=".filter-product">Product</li>
-            <li data-filter=".filter-branding">Branding</li>
-            <li data-filter=".filter-books">Books</li>
+            <?php
+            $kategori = mysqli_query($conn, "SELECT * FROM tb_category");
+            while ($k = mysqli_fetch_assoc($kategori)) {
+            ?>
+              <li data-filter=".filter-<?= strtolower(str_replace(' ', '-', $k['category_name'])); ?>">
+                <?= htmlspecialchars($k['category_name']); ?>
+              </li>
+            <?php } ?>
           </ul><!-- End Portfolio Filters -->
 
           <div class="row gy-4 isotope-container" data-aos="fade-up" data-aos-delay="200">
             <?php
-            $produk = mysqli_query($conn, "SELECT * FROM tb_product WHERE product_status = 1 ORDER BY product_id DESC LIMIT 8");
+            $produk = mysqli_query($conn, "SELECT p.*, c.category_name 
+                                          FROM tb_product p
+                                          JOIN tb_category c ON p.category_id = c.category_id
+                                          WHERE p.product_status = 1
+                                          ORDER BY p.product_id DESC
+                                          LIMIT 8");
             if (mysqli_num_rows($produk) > 0) {
               while ($p = mysqli_fetch_array($produk)) {
 
             ?>
 
-                <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-app">
+                <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-<?= strtolower(str_replace(' ', '-', $p['category_name'])); ?>">
                   <img src="../produk/<?php echo $p['product_image'] ?>" class="img-fluid" alt="">
                   <div class="portfolio-info">
                     <h4><?php echo substr($p['product_name'], 0, 30)  ?></h4>
