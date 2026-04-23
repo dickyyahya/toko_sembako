@@ -11,6 +11,7 @@ $p = mysqli_fetch_object($result);
       <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4 gap-3">
         <div class="">
           <h1 class="fs-3 mb-1">Edit Produk</h1>
+          <?php echo $p->product_image; ?>
         </div>
         <div>
           <a href="inventory.php" class="btn btn-primary">Go to Inventory List</a>
@@ -102,24 +103,29 @@ $p = mysqli_fetch_object($result);
 
             // jika ganti gambar
             if ($filename != '') {
-              $type1 = explode('.', $filename);
-              $type2 = $type1[1];
 
-              $newname = '../produk' . time() . '.' . $type2;
+              $type2 = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
+
+              $newname = time() . '.' . $type2;
 
               $tipe_diizinkan = array('jpg', 'jpeg', 'png', 'gif');
 
               if (!in_array($type2, $tipe_diizinkan)) {
-                echo '<script> alert("Format file tidak diizinkan")</script> ';
+                echo '<script>alert("Format file tidak diizinkan")</script>';
                 exit;
-              } else {
-                unlink('../produk/' . $foto);
-
-                move_uploaded_file($tmp_name, '../produk/' . $newname);
-                $namagambar = $newname;
               }
+
+              // hapus file lama
+              $oldFile = '../produk/' . $foto;
+              if (!empty($foto) && file_exists($oldFile)) {
+                unlink($oldFile);
+              }
+
+              // simpan file baru
+              move_uploaded_file($tmp_name, '../produk/' . $newname);
+
+              $namagambar = $newname;
             } else {
-              // jika tidak ganti gambar
               $namagambar = $foto;
             }
             // queri update data produk
